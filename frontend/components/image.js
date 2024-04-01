@@ -11,10 +11,42 @@ export default function Image(props) {
     ${months[newDate.getUTCMonth()]} 
     ${newDate.getUTCDate()}, 
     ${newDate.getUTCFullYear()}`;
+
+    const pastDates = [];
+
+    for (let i = 1; i <= 20; i++) {
+        const pastDate = new Date(newDate);
+        pastDate.setDate(newDate.getDate() - i); 
+
+        const pastDateFormatted = [
+            `${weekdays[pastDate.getUTCDay()]} 
+            ${months[pastDate.getUTCMonth()]} 
+            ${pastDate.getUTCDate()}, 
+            ${pastDate.getUTCFullYear()}`
+        ]
+
+        pastDates.push(pastDateFormatted);
+    };
+
+    // const handleChange = (evt) => {
+    //     if (evt.target.value === pastDates) {
+    //         return pastDates.data
+    //     }
+    // };
    
-     console.log(activeDate);
+     console.log(pastDates);
     return (
         <div className='centered'>
+            <select>
+                <option selected disabled hidden>Select a different day!</option>
+                {
+                    pastDates.map(date => {
+                        return (
+                            <option>{ date }</option>
+                        )
+                    })
+                }
+            </select>
             <h2>{data.title}</h2>
             <p>{activeDate}</p>
             <img src={data.url}/>
