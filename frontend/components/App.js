@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
 import Image from './image';
 
 export default function App() {
+  // state
   const [data, setData] = useState('');
+  const [darkmodeOn, setDarkMode] = useState(false);
+  // fetching api
   useEffect(() => {
     function fetchApi() {
       axios.get('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY')
@@ -18,9 +20,20 @@ export default function App() {
     }
     fetchApi();
   }, []);
+
+  // callback functions
+  // changes darkmode on or off
+  const darkmode = () => {
+    if (!darkmodeOn) {
+      setDarkMode(true);
+    } else if (darkmodeOn) {
+      setDarkMode(false);
+    }
+  };
+
   return (
     <div>
-      <Image data={data}/>
+      <Image data={data} darkmode={darkmode} darkmodeOn={darkmodeOn}/>
     </div>
   )
 }
